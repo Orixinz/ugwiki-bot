@@ -4,12 +4,13 @@
   "description": "UGWiki Discord/MediaWiki bot",
   "license": "ISC",
   "author": "orixinz",
-  "type": "commonjs",
-  "main": "index.js",
+  "type": "module",
+  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "discord.js": "^14.27.0"
+    "discord.js": "^14.27.0",
+    "typescript": "^7.0.2"
   }
 }
