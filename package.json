@@ -5,7 +5,7 @@
   "license": "ISC",
   "author": "orixinz",
   "type": "module",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
