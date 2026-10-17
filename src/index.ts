@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'url';
+import { login } from './mediawiki/index.ts';
 import config from './config.json' with { type: "json" };
 import { Client, Collection, Events, GatewayIntentBits, SlashCommandBuilder } from 'discord.js';
 
@@ -62,5 +63,8 @@ client.on(Events.InteractionCreate, async (interaction) => {
 		}
 	}
 });
+
+// MediaWiki
+login("rt3", config.mwuser, config.mwpswd);
 
 client.login(config.token);
