@@ -11,7 +11,7 @@ const client = new Client({
 });
 
 client.once(Events.ClientReady, (readyClient: Client<true>) => {
-  console.log(`Ready! Logged in as ${readyClient.user.tag}`);
+  console.log(`[ClientReady]: Ready! Logged in as ${readyClient.user.tag}`);
 });
 
 // Command Loading
