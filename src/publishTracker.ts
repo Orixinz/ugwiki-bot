@@ -30,13 +30,14 @@ async function sendUpdateEmbed(hookUrl: string) {
     })
 
     if (!response.ok) {
-        console.log("[!] [publishTracker]: Failed to send embed.", response)
+        console.log("[!] [publishTracker]: Failed to send embed.")
     }
 }
 
 export async function startTracking() {
     var lastUpdated = "never";
     while (true) {
+        console.log("[publishTracker]: Checking for updates. Last Updated Time:", lastUpdated)
         const info = await getExperienceInfo(config.publishTrackerUniverseId)
         if (lastUpdated == "never") {
             lastUpdated = info.updated
