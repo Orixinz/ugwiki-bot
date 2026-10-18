@@ -9,6 +9,8 @@ import { info, warn } from './log.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 
+info("==== STARTING BOT ====")
+
 const client = new Client({
   intents: [GatewayIntentBits.Guilds],
 });
