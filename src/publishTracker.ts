@@ -38,15 +38,20 @@ async function sendUpdateEmbed(hookUrl: string) {
 export async function startTracking() {
     var lastUpdated = "never";
     while (true) {
-        info("[publishTracker]: Checking for updates. Last Updated Time:", lastUpdated)
-        const experienceInfo = await getExperienceInfo(config.publishTrackerUniverseId)
-        if (lastUpdated == "never") {
-            lastUpdated = experienceInfo.updated
-        } else if (experienceInfo?.updated !== lastUpdated) {
-            info("[publishTracker]: Update detected.")
-            sendUpdateEmbed(config.publishTrackerWebhook)
-            lastUpdated = experienceInfo.updated
+        try {
+            info("[publishTracker]: Checking for updates. Last Updated Time:", lastUpdated)
+            const experienceInfo = await getExperienceInfo(config.publishTrackerUniverseId)
+            if (lastUpdated == "never") {
+                lastUpdated = experienceInfo.updated
+            } else if (experienceInfo?.updated !== lastUpdated) {
+                info("[publishTracker]: Update detected.")
+                sendUpdateEmbed(config.publishTrackerWebhook)
+                lastUpdated = experienceInfo.updated
+            }
+        } catch (error) {
+            warn("[publishTracker]: Update check failed", error.message)
         }
+        
         await sleep(60);
     }
 }
