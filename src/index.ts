@@ -1,7 +1,7 @@
 import fs from 'node:fs';
+import { Mwn } from 'mwn';
 import path from 'node:path';
 import { fileURLToPath } from 'url';
-import { MWClient } from './mediawiki/index.ts';
 import config from './config.json' with { type: "json" };
 import { Client, Collection, Events, GatewayIntentBits, SlashCommandBuilder } from 'discord.js';
 
@@ -65,13 +65,17 @@ client.on(Events.InteractionCreate, async (interaction) => {
 });
 
 // MediaWiki
-const mwClient = new MWClient("rt3", config.mwuser, config.mwpswd)
-mwClient.login()
-console.log(await mwClient.request({
-  action: "query",
-  meta: "userinfo",
-  uiprop: "realname",
-  format: "json"
-}, "GET"));
+client.mwRt3 = await Mwn.init({
+	apiUrl: config.rt3Api,
+
+	username: config.mwuser,
+    password: config.mwpswd,
+
+	userAgent: config.mwUserAgent,
+
+    defaultParams: {
+        assert: 'user' // we need to be logged in
+    }
+})
 
 client.login(config.token);
