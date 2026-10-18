@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import config from './config.json' with { type: "json" };
 import { Client, Collection, Events, GatewayIntentBits, SlashCommandBuilder } from 'discord.js';
 import { startTracking } from './publishTracker.ts';
+import { info, warn } from './log.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 
@@ -13,7 +14,7 @@ const client = new Client({
 });
 
 client.once(Events.ClientReady, (readyClient: Client<true>) => {
-  console.log(`[ClientReady]: Ready! Logged in as ${readyClient.user.tag}`);
+	info(`[ClientReady]: Ready! Logged in as ${readyClient.user.tag}`);
 });
 
 // Command Loading
@@ -30,9 +31,9 @@ for (const folder of commandFolders) {
 		// Set a new item in the Collection with the key as the command name and the value as the exported module
 		if (data && execute) {
 			client.commands.set(data.name, execute);
-      console.log(`[Command Loaded]: Loaded command ${data.name}`)
+      		info(`[Command Loaded]: Loaded command ${data.name}`)
 		} else {
-			console.log(`[!] [Command Loading]: The command at ${filePath} is missing a required "data" or "execute" property.`);
+			warn(`[Command Loading]: The command at ${filePath} is missing a required "data" or "execute" property.`);
 		}
 	}
 }
@@ -43,14 +44,14 @@ client.on(Events.InteractionCreate, async (interaction) => {
 	const command = interaction.client.commands.get(interaction.commandName);
 
 	if (!command) {
-		console.log(`[!] [Command Handling]: No command matching ${interaction.commandName} was found.`);
+		warn(`[Command Handling]: No command matching ${interaction.commandName} was found.`);
 		return;
 	}
 
 	try {
 		await command(interaction);
 	} catch (error) {
-		console.log('[!] [Command Error]: ' + error);
+		warn('[Command Error]: ' + error);
 		if (interaction.replied || interaction.deferred) {
 			await interaction.followUp({
 				content: "🤖 I wasn't able to complete this task because an error occured. *I have logged this.*",

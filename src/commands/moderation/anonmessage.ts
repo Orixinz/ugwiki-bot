@@ -1,5 +1,6 @@
 import { ChatInputCommandInteraction, MessageFlags, SlashCommandBuilder } from "discord.js";
 import { isMemberModerator } from "../../permissionCheck.ts";
+import { warn } from "../../log.ts";
 
 export const data = new SlashCommandBuilder()
     .setName('anonmessage')
@@ -23,7 +24,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
         await interaction.followUp(`🤖 I have delivered your message.`)
     } catch (error) {
         await interaction.followUp(`🤖 I wasn't able to deliver this message. *I have logged this.*`)
-        console.log('[!] [SetSiteNotice]: Failed to set site notice. Got error: ' + error.message)
+        warn('[SetSiteNotice]: Failed to set site notice. Got error: ' + error.message)
     }
 
 };

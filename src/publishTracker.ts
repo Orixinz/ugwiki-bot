@@ -1,5 +1,6 @@
 // we use a webhook here so its independent from the bot.
 import config from './config.json' with { type: "json" };
+import { info, warn } from './log.ts';
 
 function sleep(seconds: number) {
   return new Promise(resolve => setTimeout(resolve, seconds * 1000));
@@ -30,21 +31,21 @@ async function sendUpdateEmbed(hookUrl: string) {
     })
 
     if (!response.ok) {
-        console.log("[!] [publishTracker]: Failed to send embed.")
+        warn("[publishTracker]: Failed to send embed.")
     }
 }
 
 export async function startTracking() {
     var lastUpdated = "never";
     while (true) {
-        console.log("[publishTracker]: Checking for updates. Last Updated Time:", lastUpdated)
-        const info = await getExperienceInfo(config.publishTrackerUniverseId)
+        info("[publishTracker]: Checking for updates. Last Updated Time:", lastUpdated)
+        const experienceInfo = await getExperienceInfo(config.publishTrackerUniverseId)
         if (lastUpdated == "never") {
-            lastUpdated = info.updated
-        } else if (info?.updated !== lastUpdated) {
-            console.log("[publishTracker]: Update detected.")
+            lastUpdated = experienceInfo.updated
+        } else if (experienceInfo?.updated !== lastUpdated) {
+            info("[publishTracker]: Update detected.")
             sendUpdateEmbed(config.publishTrackerWebhook)
-            lastUpdated = info.updated
+            lastUpdated = experienceInfo.updated
         }
         await sleep(60);
     }
