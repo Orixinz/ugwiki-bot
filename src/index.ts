@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'url';
 import config from './config.json' with { type: "json" };
 import { Client, Collection, Events, GatewayIntentBits, SlashCommandBuilder } from 'discord.js';
+import { startTracking } from './publishTracker.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 
@@ -77,5 +78,5 @@ client.mwRt3 = await Mwn.init({
         assert: 'user' // we need to be logged in
     }
 })
-
 client.login(config.token);
+startTracking();
