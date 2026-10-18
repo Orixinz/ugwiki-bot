@@ -1,16 +1,18 @@
 {
   "name": "ugwiki-bot",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "UGWiki Discord/MediaWiki bot",
   "license": "ISC",
   "author": "orixinz",
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "bot": "node src/index.ts",
+    "deploy": "node deploy-commands.js"
   },
   "dependencies": {
     "discord.js": "^14.27.0",
+    "mwn": "^3.0.3",
     "typescript": "^7.0.2"
   }
 }
