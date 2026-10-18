@@ -1,10 +1,15 @@
 import { ChatInputCommandInteraction, MessageFlags, SlashCommandBuilder } from "discord.js";
+import { isMemberModerator } from "../../permissionCheck.ts";
 
 export const data = new SlashCommandBuilder()
     .setName('setsitenotice')
     .setDescription('Sets the site notice to the specified text.')
     .addStringOption((option) => option.setName('content').setDescription('The content of the site notice. If you do not pass this, the site notice will be cleared.'));
 export async function execute(interaction: ChatInputCommandInteraction) {
+    if (!isMemberModerator) {
+        await interaction.reply({ content: "🤖 I cannot let you run this command.",  flags: MessageFlags.Ephemeral })
+        return;
+    }
     const bot = interaction.client.mwRt3;
 
     const content = interaction.options.getString('content') ?? '-';
