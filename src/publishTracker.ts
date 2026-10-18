@@ -1,6 +1,6 @@
 // we use a webhook here so its independent from the bot.
 import config from './config.json' with { type: "json" };
-import { info, warn } from './log.ts';
+import { info, minor, warn } from './log.ts';
 
 function sleep(seconds: number) {
   return new Promise(resolve => setTimeout(resolve, seconds * 1000));
@@ -39,7 +39,7 @@ export async function startTracking() {
     var lastUpdated = "never";
     while (true) {
         try {
-            info("[publishTracker]: Checking for updates. Last Updated Time:", lastUpdated)
+            minor("[publishTracker]: Checking for updates. Last Updated Time:", lastUpdated)
             const experienceInfo = await getExperienceInfo(config.publishTrackerUniverseId)
             if (lastUpdated == "never") {
                 lastUpdated = experienceInfo.updated
