@@ -42,22 +42,22 @@ client.on(Events.InteractionCreate, async (interaction) => {
 	const command = interaction.client.commands.get(interaction.commandName);
 
 	if (!command) {
-		console.error(`[!] [Command Handling]: No command matching ${interaction.commandName} was found.`);
+		console.log(`[!] [Command Handling]: No command matching ${interaction.commandName} was found.`);
 		return;
 	}
 
 	try {
 		await command(interaction);
 	} catch (error) {
-		console.error('[!] [Command Error]: ' + error);
+		console.log('[!] [Command Error]: ' + error);
 		if (interaction.replied || interaction.deferred) {
 			await interaction.followUp({
-				content: 'An error occured while trying to run this command.',
+				content: "🤖 I wasn't able to complete this task because an error occured. *I have logged this.*",
 				flags: MessageFlags.Ephemeral,
 			});
 		} else {
 			await interaction.reply({
-				content: 'An error occured while trying to run this command.',
+				content: "🤖 I wasn't able to complete this task because an error occured. *I have logged this.*",
 				flags: MessageFlags.Ephemeral,
 			});
 		}
