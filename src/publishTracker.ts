@@ -39,7 +39,7 @@ export async function startTracking() {
     var lastUpdated = "never";
     while (true) {
         try {
-            minor("[publishTracker]: Checking for updates. Last Updated Time:", lastUpdated)
+            //minor("[publishTracker]: Checking for updates. Last Updated Time:", lastUpdated)
             const experienceInfo = await getExperienceInfo(config.publishTrackerUniverseId)
             if (lastUpdated == "never") {
                 lastUpdated = experienceInfo.updated
